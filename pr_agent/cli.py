@@ -7,7 +7,7 @@ from pr_agent.algo.utils import get_version
 from pr_agent.config_loader import get_settings
 from pr_agent.log import get_logger, setup_logger
 
-log_level = os.environ.get("LOG_LEVEL", "INFO")
+log_level = os.environ.get("LOG_LEVEL", "DEBUG")
 setup_logger(log_level)
 
 
