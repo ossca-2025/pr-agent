@@ -132,7 +132,7 @@ def apply_repo_settings(pr_url):
                 # ★ 개선점 2: 운영체제 확인 ★
                 if sys.platform == 'win32': # 현재 운영체제가 Windows 인 경우
                     # ★ 개선점 3 & 4: Windows 에서만 재시도 로직 및 로그 레벨 변경 적용 ★
-                    attempts = 3  # 최대 3번 시도
+                    attempts = 2  # 최대 2번 시도
                     delay = 0.1 # 시도 간 0.1초 대기
                     for i in range(attempts):
                         try:
