@@ -1,5 +1,5 @@
 [config]
-enable_custom_labels=false
+enable_custom_labels=true
 
 ## template for custom labels
 #[custom_labels."Bug fix"]
