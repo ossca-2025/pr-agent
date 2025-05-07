@@ -26,19 +26,19 @@ disable_auto_feedback = false
 ai_timeout=120 # 2minutes
 skip_keys = []
 custom_reasoning_model = false # when true, disables system messages and temperature controls for models that don't support chat-style inputs
-response_language="en-US" # Language locales code for PR responses in ISO 3166 and ISO 639 format (e.g., "en-US", "it-IT", "zh-CN", ...)
+response_language="ko-KR" # Language locales code for PR responses in ISO 3166 and ISO 639 format (e.g., "en-US", "it-IT", "zh-CN", ...)
 # token limits
 max_description_tokens = 500
 max_commits_tokens = 500
 max_model_tokens = 64000 # Limits the maximum number of tokens that can be used by any model, regardless of the model's default capabilities.
-custom_model_max_tokens=1000000 # for models not in the default list
+custom_model_max_tokens=100000 # for models not in the default list
 model_token_count_estimate_factor=0.3 # factor to increase the token count estimate, in order to reduce likelihood of model failure due to too many tokens - applicable only when requesting an accurate estimate.
 # patch extension logic
 patch_extension_skip_types =[".md",".txt"]
 allow_dynamic_context=true
 max_extra_lines_before_dynamic_context = 10 # will try to include up to 10 extra lines before the hunk in the patch, until we reach an enclosing function or class
 patch_extra_lines_before = 5 # Number of extra lines (+3 default ones) to include before each hunk in the patch
-patch_extra_lines_after = 1 # Number of extra lines (+3 default ones) to include after each hunk in the patch
+patch_extra_lines_after = 3 # Number of extra lines (+3 default ones) to include after each hunk in the patch
 secret_provider=""
 cli_mode=false
 ai_disclaimer_title=""  # Pro feature, title for a collapsible disclaimer to AI outputs
