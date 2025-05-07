@@ -5,7 +5,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://www.qodo.ai/wp-content/uploads/2025/02/PR-Agent-Purple-2.png">
   <source media="(prefers-color-scheme: light)" srcset="https://www.qodo.ai/wp-content/uploads/2025/02/PR-Agent-Purple-2.png">
-  <img src="https://www.google.com/imgres?q=%EC%88%98%EB%8B%AC&imgurl=https%3A%2F%2Fimg.hankyung.com%2Fphoto%2F202305%2FAD.33538114.1.jpg&imgrefurl=https%3A%2F%2Fmagazine.hankyung.com%2Fbusiness%2Farticle%2F202305247312b&docid=zh3V5kTj2z6FJM&tbnid=JhGPAdfcBzd4-M&vet=12ahUKEwjv2ZGNkPqMAxW0e_UHHYXqJwgQM3oECCwQAA..i&w=620&h=413&hcb=2&ved=2ahUKEwjv2ZGNkPqMAxW0e_UHHYXqJwgQM3oECCwQAA" alt="logo" width="330">
+  <img src="https://codium.ai/images/pr_agent/logo-light.png" alt="logo" width="330">
 
 </picture>
 <br/>
