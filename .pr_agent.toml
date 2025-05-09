@@ -1,6 +1,3 @@
 [pr_reviewer]
 enable_review_labels_effort = true
 enable_auto_approval = true
-
-[pr_description]
-enable_help_comment=false
