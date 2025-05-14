@@ -45,7 +45,7 @@ class PRDescription(BaseModel):
     type: List[PRType] = Field(description="one or more types that describe the PR content. Return the label member value (e.g. 'Bug fix', not 'bug_fix')")
     description: str = Field(description="summarize the PR changes in up to four bullet points, each up to 8 words. For large PRs, add sub-bullets if needed. Order bullets by importance, with each bullet highlighting a key change group.
 {%- if add_diagram %}
-  Also, include a concise MermaidJS sequence diagram (max 10 steps) showing key function or module interactions. Add this in the 'PRDescription' YAML section.
+  Also, for each modified Python file, generate a concise MermaidJS sequence diagram illustrating the key function call relationships or component interactions introduced or changed in that file. Include each diagram in the 'PRDescription' section.
 {%- endif %}
 ")
     title: str = Field(description="a concise and descriptive title that captures the PR's main theme")
