@@ -31,11 +31,6 @@ class PRType(str, Enum):
 
 {%- endif %}
 
-{%- if add_diagram == "true" %}
-Also, include a MermaidJS sequence diagram showing
-key function or module interactions if possible.
-{%- endif %}
-
 {%- if enable_semantic_files_types %}
 
 class FileDescription(BaseModel):
@@ -50,7 +45,7 @@ class FileDescription(BaseModel):
 class PRDescription(BaseModel):
     type: List[PRType] = Field(description="one or more types that describe the PR content. Return the label member value (e.g. 'Bug fix', not 'bug_fix')")
     description: str = Field(description="summarize the PR changes in up to four bullet points, each up to 8 words. For large PRs, add sub-bullets if needed. Order bullets by importance, with each bullet highlighting a key change group.
-{%- if add_diagram == "true" %}
+{%- if add_diagram %}
     Also, generate a MermaidJS sequence diagram that illustrates the main function call relationships or component interactions introduced or changed in this PR.
 {%- endif %}
 ")
