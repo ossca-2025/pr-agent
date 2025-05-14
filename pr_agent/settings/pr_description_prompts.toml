@@ -47,7 +47,7 @@ class PRDescription(BaseModel):
 {%- if add_diagram %}
   Generate a separate MermaidJS sequence diagram illustrating the key function call relationships or component interactions introduced or changed in that file. Ensure each diagram is enclosed within its own code block using triple backticks and the 'mermaid' language identifier to prevent rendering issues.
   Include each diagram in the 'PRDescription' section.
-{% endif %}
+{%- endif %}
 ")
     title: str = Field(description="a concise and descriptive title that captures the PR's main theme")
 {%- if enable_semantic_files_types %}
