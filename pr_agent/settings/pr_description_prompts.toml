@@ -48,7 +48,7 @@ class PRDescription(BaseModel):
     You are a developer tool that reads a GitHub Pull Request and generates a Mermaid sequence diagram.
 
     From the provided code diff, extract the sequence of function calls between modules or classes.
-    Output only a valid Mermaid sequenceDiagram.
+    Output only a valid Mermaid sequenceDiagram.  Add this in the 'PRDescription' YAML section.
 
     Rules:
     - Use 'participant' to represent functions or modules.
