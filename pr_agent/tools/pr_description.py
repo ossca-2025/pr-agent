@@ -71,7 +71,8 @@ class PRDescription:
             "custom_labels_class": "",  # will be filled if necessary in 'set_custom_labels' function
             "enable_semantic_files_types": get_settings().pr_description.enable_semantic_files_types,
             "related_tickets": "",
-            "include_file_summary_changes": len(self.git_provider.get_diff_files()) <= self.COLLAPSIBLE_FILE_LIST_THRESHOLD,
+            "include_file_summary_changes": len(
+                self.git_provider.get_diff_files()) <= self.COLLAPSIBLE_FILE_LIST_THRESHOLD,
             'duplicate_prompt_examples': get_settings().config.get('duplicate_prompt_examples', False),
             "add_diagram": get_settings().pr_description.add_diagram,
         }
@@ -96,7 +97,7 @@ class PRDescription:
             get_logger().info(f"Generating a PR description for pr_id: {self.pr_id}")
             relevant_configs = {'pr_description': dict(get_settings().pr_description),
                                 'config': dict(get_settings().config)}
-            get_logger().debug("Relevant configs", artifacts=relevant_configs)
+            get_logger().debug("Relevant configs", artifact=relevant_configs)
             if get_settings().config.publish_output and not get_settings().config.get('is_auto_command', False):
                 self.git_provider.publish_comment("Preparing PR description...", is_temporary=True)
 
@@ -137,14 +138,16 @@ class PRDescription:
                 pr_body += "\n</details>\n"
             elif get_settings().pr_description.enable_help_comment and self.git_provider.is_supported("gfm_markdown"):
                 if isinstance(self.git_provider, GithubProvider):
-                    pr_body += ('\n\n___\n\n> <details> <summary>  Need help?</summary><li>Type <code>/help how to ...</code> '
-                                'in the comments thread for any questions about PR-Agent usage.</li><li>Check out the '
-                                '<a href="https://qodo-merge-docs.qodo.ai/usage-guide/">documentation</a> '
-                                'for more information.</li></details>')
-                else: # gitlab
-                    pr_body += ("\n\n___\n\n<details><summary>Need help?</summary>- Type <code>/help how to ...</code> in the comments "
-                                "thread for any questions about PR-Agent usage.<br>- Check out the "
-                                "<a href='https://qodo-merge-docs.qodo.ai/usage-guide/'>documentation</a> for more information.</details>")
+                    pr_body += (
+                        '\n\n___\n\n> <details> <summary>  Need help?</summary><li>Type <code>/help how to ...</code> '
+                        'in the comments thread for any questions about PR-Agent usage.</li><li>Check out the '
+                        '<a href="https://qodo-merge-docs.qodo.ai/usage-guide/">documentation</a> '
+                        'for more information.</li></details>')
+                else:  # gitlab
+                    pr_body += (
+                        "\n\n___\n\n<details><summary>Need help?</summary>- Type <code>/help how to ...</code> in the comments "
+                        "thread for any questions about PR-Agent usage.<br>- Check out the "
+                        "<a href='https://qodo-merge-docs.qodo.ai/usage-guide/'>documentation</a> for more information.</details>")
             # elif get_settings().pr_description.enable_help_comment:
             #     pr_body += '\n\n___\n\n> 💡 **PR-Agent usage**: Comment `/help "your question"` on any pull request to receive relevant information'
 
@@ -155,7 +158,8 @@ class PRDescription:
             if get_settings().config.publish_output:
 
                 # publish labels
-                if get_settings().pr_description.publish_labels and pr_labels and self.git_provider.is_supported("get_labels"):
+                if get_settings().pr_description.publish_labels and pr_labels and self.git_provider.is_supported(
+                        "get_labels"):
                     original_labels = self.git_provider.get_pr_labels(update=True)
                     get_logger().debug(f"original labels", artifact=original_labels)
                     user_labels = get_user_labels(original_labels)
@@ -181,7 +185,8 @@ class PRDescription:
                     self.git_provider.publish_description(pr_title, pr_body)
 
                     # publish final update message
-                    if (get_settings().pr_description.final_update_message and not get_settings().config.get('is_auto_command', False)):
+                    if (get_settings().pr_description.final_update_message and not get_settings().config.get(
+                            'is_auto_command', False)):
                         latest_commit_url = self.git_provider.get_latest_commit_url()
                         if latest_commit_url:
                             pr_url = self.git_provider.get_pr_url()
@@ -200,11 +205,13 @@ class PRDescription:
 
     async def _prepare_prediction(self, model: str) -> None:
         if get_settings().pr_description.use_description_markers and 'pr_agent:' not in self.user_description:
-            get_logger().info("Markers were enabled, but user description does not contain markers. skipping AI prediction")
+            get_logger().info(
+                "Markers were enabled, but user description does not contain markers. skipping AI prediction")
             return None
 
         large_pr_handling = get_settings().pr_description.enable_large_pr_handling and "pr_description_only_files_prompts" in get_settings()
-        output = get_pr_diff(self.git_provider, self.token_handler, model, large_pr_handling=large_pr_handling, return_remaining_files=True)
+        output = get_pr_diff(self.git_provider, self.token_handler, model, large_pr_handling=large_pr_handling,
+                             return_remaining_files=True)
         if isinstance(output, tuple):
             patches_diff, remaining_files_list = output
         else:
@@ -330,7 +337,8 @@ class PRDescription:
             else:
                 original_prediction_dict = original_prediction_loaded
             if original_prediction_dict:
-                filenames_predicted = [file.get('filename', '').strip() for file in original_prediction_dict.get('pr_files', [])]
+                filenames_predicted = [file.get('filename', '').strip() for file in
+                                       original_prediction_dict.get('pr_files', [])]
             else:
                 filenames_predicted = []
 
@@ -388,7 +396,6 @@ class PRDescription:
         except Exception as e:
             get_logger().exception(f"Error extending uncovered files {self.pr_id}", artifact={"error": e})
             return original_prediction
-
 
     async def extend_additional_files(self, remaining_files_list) -> str:
         prediction = self.prediction
@@ -498,7 +505,7 @@ class PRDescription:
         else:
             # Assign the value of the 'PR Title' key to 'title' variable
             title = ai_title
-      
+
         body = self.user_description
         if get_settings().pr_description.include_generated_by_header:
             ai_header = f"### 🤖 Generated by PR Agent at {self.git_provider.last_commit_id.sha}\n\n"
@@ -508,10 +515,10 @@ class PRDescription:
         ai_type = self.data.get('type')
         if ai_type and not re.search(r'<!--\s*pr_agent:type\s*-->', body):
             if isinstance(ai_type, list):
-                pr_types = [f"{ai_header}{t}" for t in ai_type]
-                pr_type = ','.join(pr_types)
+                pr_type = ', '.join(str(t) for t in ai_type)
             else:
-                pr_type = f"{ai_header}{ai_type}"
+                pr_type = ai_type
+            pr_type = f"{ai_header}{pr_type}"
             body = body.replace('pr_agent:type', pr_type)
 
         ai_summary = self.data.get('description')
@@ -591,7 +598,8 @@ class PRDescription:
             elif key.lower().strip() == 'description':
                 if isinstance(value, list):
                     value = ', '.join(v.rstrip() for v in value)
-                value = value.replace('\n-', '\n\n-').strip() # makes the bullet points more readable by adding double space
+                value = value.replace('\n-',
+                                      '\n\n-').strip()  # makes the bullet points more readable by adding double space
                 pr_body += f"{value}\n"
             else:
                 # if the value is a list, join its items by comma
@@ -617,8 +625,9 @@ class PRDescription:
                                          artifact={"file": file})
                     continue
                 if not file.get('changes_title'):
-                    get_logger().warning(f"Empty changes title or summary in file label dict {self.pr_id}, skipping file",
-                                         artifact={"file": file})
+                    get_logger().warning(
+                        f"Empty changes title or summary in file label dict {self.pr_id}, skipping file",
+                        artifact={"file": file})
                     continue
                 filename = file['filename'].replace("'", "`").replace('"', '`')
                 changes_summary = file.get('changes_summary', "").strip()
@@ -666,7 +675,8 @@ class PRDescription:
                     filename_publish = filename.split("/")[-1]
                     if file_changes_title and file_changes_title.strip() != "...":
                         file_changes_title_code = f"<code>{file_changes_title}</code>"
-                        file_changes_title_code_br = insert_br_after_x_chars(file_changes_title_code, x=(delta - 5)).strip()
+                        file_changes_title_code_br = insert_br_after_x_chars(file_changes_title_code,
+                                                                             x=(delta - 5)).strip()
                         if len(file_changes_title_code_br) < (delta - 5):
                             file_changes_title_code_br += "&nbsp; " * ((delta - 5) - len(file_changes_title_code_br))
                         filename_publish = f"<strong>{filename_publish}</strong><dd>{file_changes_title_code_br}</dd>"
@@ -745,6 +755,7 @@ class PRDescription:
 </tr>
 """
         return pr_body
+
 
 def count_chars_without_html(string):
     if '<' not in string:
