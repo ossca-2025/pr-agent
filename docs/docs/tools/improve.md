@@ -18,8 +18,9 @@ The tool can be triggered automatically every time a new PR is [opened](../usage
 ___
 
 !!! note "The following features are available only for Qodo Merge 💎 users:"
-    - The `Apply this suggestion` checkbox, which interactively converts a suggestion into a committable code comment
+    - The `Apply / Chat` checkbox, which interactively converts a suggestion into a committable code comment
     - The `More` checkbox to generate additional suggestions
+    - On Bitbucket (Cloud & Data Center) and GitLab Server (v16 and earlier), you can invoke [More Suggestions manually](#manual-more-suggestions)
 
 ## Example usage
 
@@ -43,6 +44,13 @@ For example, you can choose to present all the suggestions as committable code c
 
 As can be seen, a single table comment has a significantly smaller PR footprint. We recommend this mode for most cases.
 Also note that collapsible are not supported in _Bitbucket_. Hence, the suggestions can only be presented in Bitbucket as code comments.
+
+#### Manual more suggestions
+To generate more suggestions (distinct from the ones already generated), for git-providers that don't support interactive checkbox option, you can manually run:
+
+```
+/improve --more_suggestions=true
+```
 
 ### Automatic triggering
 
@@ -427,7 +435,7 @@ To enable auto-approval based on specific criteria, first, you need to enable th
 enable_auto_approval = true
 ```
 
-There are two criteria that can be set for auto-approval:
+There are several criteria that can be set for auto-approval:
 
 - **Review effort score**
 
@@ -449,7 +457,19 @@ enable_auto_approval = true
 auto_approve_for_no_suggestions = true
 ```
 
-When no [code suggestion](https://www.qodo.ai/images/pr_agent/code_suggestions_as_comment_closed.png) were found for the PR, the PR will be auto-approved.
+When no [code suggestions](https://www.qodo.ai/images/pr_agent/code_suggestions_as_comment_closed.png) were found for the PR, the PR will be auto-approved.
+
+___
+
+- **Ticket Compliance**
+
+```toml
+[config]
+enable_auto_approval = true
+ensure_ticket_compliance = true # Default is false
+```
+
+If `ensure_ticket_compliance` is set to `true`, auto-approval will be disabled if a ticket is linked to the PR and the ticket is not compliant (e.g., the `review` tool did not mark the PR as fully compliant with the ticket). This ensures that PRs are only auto-approved if their associated tickets are properly resolved.
 
 ### How many code suggestions are generated?
 
